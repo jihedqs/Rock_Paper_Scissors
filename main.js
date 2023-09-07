@@ -13,17 +13,10 @@ function game() {
             if (lowPlayer == computerSelection) {
                 return "draw"
             }
-            else if (lowPlayer == 'rock' && computerSelection == 'scissors') {
-                score += 1
-                botScore -= 1
-                return `You win! ${playerSelection} beats ${computerSelection}`
-            }
-            else if (lowPlayer == 'paper' && computerSelection == 'rock') {
-                score += 1
-                botScore -= 1
-                return `You Win! ${playerSelection} beats ${computerSelection}`
-            }
-            else if (lowPlayer == 'scissors' && computerSelection == 'paper') {
+            else if ((lowPlayer == 'rock' && computerSelection == 'scissors') ||
+                (lowPlayer == 'paper' && computerSelection == 'rock') ||
+                (lowPlayer == 'scissors' && computerSelection == 'paper')) {
+
                 score += 1
                 botScore -= 1
                 return `You win! ${playerSelection} beats ${computerSelection}`
