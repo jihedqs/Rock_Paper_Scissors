@@ -4,51 +4,61 @@ function getComputerChoice() {
   let computerSelection = arr[index];
   return computerSelection;
 }
-let score = 0;
-let botScore = 0;
 function game() {
-  for (let i = 0; i < 5; i++) {
-    function playRound(playerSelection, computerSelection) {
-      lowPlayer = playerSelection.toLowerCase();
-      if (lowPlayer == computerSelection) {
-        return "draw";
-      } else if (
-        (lowPlayer == "rock" && computerSelection == "scissors") ||
-        (lowPlayer == "paper" && computerSelection == "rock") ||
-        (lowPlayer == "scissors" && computerSelection == "paper")
-      ) {
-        score += 1;
-        botScore -= 1;
-        return `You win! ${playerSelection} beats ${computerSelection}`;
-      } else {
-        score -= 1;
-        botScore += 1;
-        return `You Lose! ${computerSelection} beats ${playerSelection}`;
+  function playRound(playerSelection, computerSelection) {
+    lowPlayer = playerSelection.toLowerCase();
+    if (lowPlayer == computerSelection) {
+      return "draw";
+    } else if (
+      (lowPlayer == "rock" && computerSelection == "scissors") ||
+      (lowPlayer == "paper" && computerSelection == "rock") ||
+      (lowPlayer == "scissors" && computerSelection == "paper")
+    ) {
+      return `Vectory`;
+    } else {
+      return `Defeat`;
+    }
+  }
+
+  let playerScore = 0;
+  let computerScore = 0;
+  const scorePragraph = document.querySelector(".score");
+  function check(playerSelection, computerSelection) {
+    if (playRound(playerSelection, computerSelection) == "draw") {
+      scorePragraph.textContent =
+        "computer: " + computerScore + " - " + "player: " + playerScore;
+
+      console.log(playerScore + " - " + computerScore);
+    } else if (playRound(playerSelection, computerSelection) == "Vectory") {
+      ++playerScore;
+      scorePragraph.textContent =
+        "computer: " + computerScore + " - " + "player: " + playerScore;
+
+      console.log(playerScore + " - " + computerScore);
+    } else if (playRound(playerSelection, computerSelection) == "Defeat") {
+      ++computerScore;
+      scorePragraph.textContent =
+        "computer: " + computerScore + " - " + "player: " + playerScore;
+    }
+  }
+
+  const div = document.querySelector(".result");
+  const btns = document.querySelectorAll("button");
+  const winParagraph = document.querySelector(".win");
+  btns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      if (playerScore >= 5 || computerScore >= 5) {
+        return;
       }
-    }
-
-    function conditionSeclect() {
-      do {
-        let x = prompt("enter:");
-      } while (
-        x.toLowerCase() != "rock" &&
-        x.toLowerCase() != "scissors" &&
-        x.toLowerCase() != "paper"
-      );
-      return x;
-    }
-
-    const playerSelection = conditionSeclect();
-    const computerSelection = getComputerChoice();
-    console.log(playRound(playerSelection, computerSelection));
-  }
-  if (score > botScore) {
-    console.log("you won " + score);
-  } else if (score == botScore) {
-    console.log("Draw " + score);
-  } else {
-    console.log("you lose " + score);
-  }
+      const computerSelection = getComputerChoice();
+      const playerSelection = btn.className;
+      const p = `${playRound(playerSelection, computerSelection)}`;
+      const result = document.createElement("div");
+      result.textContent = p;
+      div.append(result);
+      check(playerSelection, computerSelection);
+    });
+  });
 }
 
 game();
